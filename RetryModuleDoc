@@ -1,0 +1,28 @@
+Retry using Resilience4j
+
+here i have implemeneted retry mechanism using resilience4j
+
+when one service is communicating with other service and if other service is slow due to many reasons like :
+a)if second service connects to kafka and if kafka s slow
+b)if second service is connected with db and db is in other datacenter 
+c) is second service is slow due to env traffic issue
+
+then this retry mechanism will help 
+here we need to add @retry annottaion 
+	@Retry(name= "EmailNotificationService",fallbackMethod="dummyretrymethod")
+  dummy fallback method need to be given 
+  I am using same services which are used in circuit breaker pattern 
+  i have stopped consuming servces and retry attempts will be attempted automatically a/c to properties mentioned 
+ 
+ 
+ resilience4j.retry.configs.default1.max-retry-attempts=5
+resilience4j.retry.configs.default1.wait-duration=10s
+
+each 10sec an attempted will be done automatically to connect to other service and if 5 attempts are done still service is down retryfallback method will be called and response and gets printed 
+
+
+
+
+
+
+
