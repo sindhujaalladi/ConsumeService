@@ -66,5 +66,9 @@ here service gets failure so it went to open state
 ![image](https://user-images.githubusercontent.com/115841974/207443001-adcdf2c1-b688-4b6d-9977-38aed72ea9c2.png)
 now above screenshot reprsents if service gets success
 
+Retry mechanism using resilience4j
+![image](https://user-images.githubusercontent.com/115841974/207457845-a993aeab-af84-477c-9092-03f0cf931475.png)
+
+![image](https://user-images.githubusercontent.com/115841974/207457919-be41b637-7d71-4800-99dc-4e2281fbeb5a.png)
 
 
