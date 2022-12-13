@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @RestController
+@Slf4j
 @RequestMapping("consume")
 public class ConsumeServiceApplication {
 	
-	
+	private int count=1;
 	
 	@Autowired
 	private RestTemplate resttemplate;
@@ -28,12 +31,19 @@ public class ConsumeServiceApplication {
 	
 	
 	@GetMapping("update")
-	@CircuitBreaker(name = "EmailNotificationService",fallbackMethod = "dummyconsumeservice")
+	//@CircuitBreaker(name = "EmailNotificationService",fallbackMethod = "dummyconsumeservice")
+	@Retry(name= "EmailNotificationService",fallbackMethod="dummyretrymethod")
 	public String consumeservices() {
+		//log.debug("retry attempts attempted" +count++ +"times");
+		System.out.println("retry attempts attempted" +count++ +"times");
 		String emailresponse = resttemplate.getForObject("http://localhost:9797/emailservice/sendmail", String.class);
 		String notificationresponse = resttemplate.getForObject("http://localhost:9898/notificationservice/sendnotification", String.class);
 		return emailresponse + "\n" + notificationresponse ;
 
+	}
+	
+	public String dummyretrymethod(Exception e) {
+		return "sorry service went down please retry using retry method !!";
 	}
 	
 	public String dummyconsumeservice(Exception e) {
