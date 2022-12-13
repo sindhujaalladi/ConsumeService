@@ -1,6 +1,7 @@
 # ConsumeService
 
 Here i have implemented circuit breaker using resilience4j
+I have consumed NotificationService and Email Service and implemented circuit breaker
 
 we can implement circuit breakerusing spring cloud netflix starter but now its deeprecated so now implemented using resilience4j
 for this 3 starter dependecies needs to be added .
